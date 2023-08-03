@@ -17,24 +17,19 @@ from utils import check_code, is_chat_member
 #     await message.answer(message.text)
 
 
-@dp.message_handler(IsGroup(), IsNightTime())
+@dp.message_handler(IsGroup(), IsNightTime(), content_types=types.ContentTypes.ANY)
 async def night_messages(message: types.Message):
     system_message = await message.answer('Публиковать объявления можно только с 7:00 до 22:00')
-    admin_list = [i[:-1] for i in open('data/admins.txt', 'r').readlines()]
-    for admin in admin_list:
-        await message.forward(admin)
-    await message.delete()
 
-    await asyncio.sleep(120)
+    await message.forward(-1001573131520)
+    await message.delete()
+    await asyncio.sleep(60)
     await system_message.delete()
 
 
 @dp.message_handler(IsGroup(), SwearCheck())
 async def swearing_check(message: types.Message):
-    admin_list = [i[:-1] for i in open('data/admins.txt', 'r').readlines()]
-    print(admin_list)
-    for admin in admin_list:
-        await message.forward(int(admin))
+    await message.forward(-1001573131520)
     await message.delete()
 
 
@@ -82,7 +77,7 @@ async def non_subscriber(message: types.Message):
              f'опубликовать объявление в группе Вам необходимо подписаться на наш канал 👇️',
         reply_markup=keyboard)
     await message.delete()
-    await asyncio.sleep(120)
+    await asyncio.sleep(60)
     await system_message.delete()
 
 
@@ -94,10 +89,28 @@ async def for_all(message: types.Message):
         text=f'Вы можете разместить объявление по недвижимости только через публикацию объявления в '
              f'нашем боте "МойДом"',
         reply_markup=keyboard)
-    admin_list = [i[:-1] for i in open('data/admins.txt', 'r').readlines()]
-    for admin in admin_list:
-        await message.forward(admin)
+    await message.forward(-1001573131520)
     await message.delete()
 
-    await asyncio.sleep(120)
+    await asyncio.sleep(60)
     await system_message.delete()
+
+
+@dp.message_handler(IsGroup(), EstateCheck(), content_types=types.ContentTypes.ANY)
+async def for_all(message: types.Message):
+    keyboard = types.InlineKeyboardMarkup().add(
+        types.InlineKeyboardButton("МойДом", url="https://t.me/MoyDom_Rielty_bot"))
+    system_message = await message.answer(
+        text=f'Вы можете разместить объявление по недвижимости только через публикацию объявления в '
+             f'нашем боте "МойДом"',
+        reply_markup=keyboard)
+    await message.forward(-1001573131520)
+    print(await message.delete())
+
+    await asyncio.sleep(60)
+    await system_message.delete()
+
+
+# @dp.message_handler(content_types=types.ContentTypes.PHOTO)
+# async def hi(message: types.Message):
+#     print(message.caption)

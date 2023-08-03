@@ -34,7 +34,10 @@ class SwearCheck(BoundFilter):
 
 class EstateCheck(BoundFilter):
     async def check(self, message: types.Message, *args) -> bool:
-        return check_estate(message.text)
+        if message.text:
+            return check_estate(message.text)
+        elif message.caption:
+            return check_estate(message.caption)
 
 
 class isPrivate(BoundFilter):
