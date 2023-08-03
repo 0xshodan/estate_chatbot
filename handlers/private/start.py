@@ -21,7 +21,7 @@ async def start(message: types.Message, state: FSMContext):
                          reply_markup=keyboards.create_menu(is_admin_check(message.from_user.id)))
 
 
-@dp.message_handler(text='Добавить слово исключение')
+@dp.message_handler(isPrivate(), text='Добавить слово исключение')
 async def add_estate_handler(message: types.Message):
     await message.answer('Введите слово исключение')
     await EstateState.word.set()
@@ -34,20 +34,20 @@ async def add_estate_to_file(message: types.Message, state: FSMContext):
     await state.finish()
 
 
-@dp.message_handler(text='Добавить матерное слово')
+@dp.message_handler(isPrivate(), text='Добавить матерное слово')
 async def add_swear_handler(message: types.Message):
     await message.answer('Введите слово исключение')
     await SwearState.word.set()
 
 
-@dp.message_handler(state=SwearState.word)
+@dp.message_handler(isPrivate(), state=SwearState.word)
 async def add_swear_to_file(message: types.Message, state: FSMContext):
     add_swear(message.text)
     await message.answer('Слово исключение было успешно добавлено!')
     await state.finish()
 
 
-@dp.message_handler(text='Удалить группу')
+@dp.message_handler(isPrivate(), text='Удалить группу')
 async def delete_group(message: types.Message):
     code = generate_code()
     await message.answer(text=f'Для удаления группы, напишите код `{code}` в чате группы',
@@ -56,7 +56,7 @@ async def delete_group(message: types.Message):
     file.write(code + '\n')
 
 
-@dp.message_handler(text='Добавить группу')
+@dp.message_handler(isPrivate(), text='Добавить группу')
 async def add_group(message: types.Message):
     code = generate_code()
     await message.answer(text=f'Сначала добавьте бота в группу, затем напишите код `{code}` в чате группы',
@@ -65,12 +65,7 @@ async def add_group(message: types.Message):
     file.write(code + '\n')
 
 
-@dp.message_handler(text='Удалить группу')
-async def delete_group(message: types.Message):
-    pass
-
-
-@dp.message_handler(text='Опубликовать объявление')
+@dp.message_handler(isPrivate(), text='Опубликовать объявление')
 async def add_publication(message: types.Message):
     await message.answer("Перешлите объявление")
     await PublicationState.text.set()

@@ -1,6 +1,6 @@
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram import types
-from utils import chat_registration, check_code, check_swears, check_estate, check_delete_code
+from utils import chat_registration, check_code, check_swears, check_estate, check_delete_code, is_admin_check
 
 
 class IsGroup(BoundFilter):
@@ -13,7 +13,7 @@ class IsGroup(BoundFilter):
 
 class GroupNotRegister(BoundFilter):
     async def check(self, message: types.Message, *args, **kwargs) -> bool:
-        return not chat_registration(message.chat.id)
+        return (not chat_registration(message.chat.id)) and check_code(message.text)
 
 
 class GroupReRegister(BoundFilter):
@@ -41,4 +41,4 @@ class isPrivate(BoundFilter):
     async def check(self, message, *args) -> bool:
         return message.chat.type in (
             types.ChatType.PRIVATE
-        )
+        ) and is_admin_check(message.chat.id)
