@@ -17,7 +17,7 @@ def chat_registration(id_chat) -> bool:
 
 def check_code(code):
     code_list = [i[:-1] for i in open('data/codes.txt', 'r').readlines()]
-    print(code_list)
+    # print(code_list)
     return code in code_list
 
 

@@ -29,6 +29,8 @@ class GroupDelete(BoundFilter):
 class SwearCheck(BoundFilter):
     async def check(self, message: types.Message):
         # print(check_swears(message.text))
+        if message.text is None:
+            return check_swears(message.caption)
         return check_swears(message.text)
 
 

@@ -27,7 +27,7 @@ async def night_messages(message: types.Message):
     await system_message.delete()
 
 
-@dp.message_handler(IsGroup(), SwearCheck())
+@dp.message_handler(IsGroup(), SwearCheck(), content_types=types.ContentTypes.ANY)
 async def swearing_check(message: types.Message):
     await message.forward(-1001573131520)
     await message.delete()
