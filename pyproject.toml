@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "estate-chatbot"
+version = "0.1.0"
+description = ""
+authors = ["0xshodan <hngdean@gmail.com>"]
+readme = "README.md"
+packages = [{include = "estate_chatbot"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiogram = "^2.25.1"
+fastapi-admin = {git = "https://github.com/fastapi-admin/fastapi-admin"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
