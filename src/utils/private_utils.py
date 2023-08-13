@@ -2,7 +2,7 @@ import random
 import re
 import time
 from admin.models import BotAdmin
-from loader import bot
+from src.loader import bot
 
 
 def generate_code():

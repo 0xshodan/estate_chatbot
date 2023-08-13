@@ -9,7 +9,7 @@ from utils import (
     is_admin_check,
 )
 from admin.models import BotAdmin
-from loader import bot
+from src.loader import bot
 
 
 class IsGroup(BoundFilter):

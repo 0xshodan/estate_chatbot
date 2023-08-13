@@ -19,6 +19,8 @@ class BotSettings(Model):
 
 class BotAdmin(Model):
     telegram_id = fields.CharField(max_length=30)
+    username = fields.CharField(max_length=100)
+    fullname = fields.CharField(max_length=200)
 
 
 class BanWords(Model):

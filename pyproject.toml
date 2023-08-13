@@ -4,12 +4,13 @@ version = "0.1.0"
 description = ""
 authors = ["0xshodan <hngdean@gmail.com>"]
 readme = "README.md"
-packages = [{include = "estate_chatbot"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 aiogram = "^2.25.1"
-fastapi-admin = {git = "https://github.com/fastapi-admin/fastapi-admin"}
+fastapi-admin = { git = "https://github.com/fastapi-admin/fastapi-admin" }
+asyncpg = "^0.28.0"
+gunicorn = "^21.2.0"
 
 
 [build-system]

@@ -1,7 +1,7 @@
 from typing import List
 
 from filters import SwearCheck, isPrivate
-from loader import dp, bot
+from src.loader import dp, bot
 from aiogram import types
 import keyboards
 

@@ -11,21 +11,17 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
-      - PGDATA=/var/lib/postgresql/data/pgdata
-    volumes:
-      - db-data:/var/lib/postgresql/data
   app:
-    container_name: app
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
     ports:
-      - 80:8000
+      - 8000:8000
     restart: always
     depends_on:
       - db
   redis:
     container_name: redis
     image: redis
-
-volumes:
-  db-data:
-    name: ishvara-db-data
