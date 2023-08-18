@@ -1,7 +1,7 @@
 from typing import List
 
 from filters import SwearCheck, isPrivate
-from src.loader import dp, bot
+from loader import dp, bot
 from aiogram import types
 import keyboards
 
@@ -14,18 +14,18 @@ from utils import (
 )
 from aiogram.dispatcher import FSMContext
 from states import PublicationState, EstateState, SwearState
-
+from aiogram.dispatcher.filters import CommandStart
 
 # from aiogram.dispatcher.filters import Media
 
 
-@dp.message_handler(isPrivate(), commands="start")
+@dp.message_handler(isPrivate(), CommandStart())
 async def start(message: types.Message, state: FSMContext):
     # print(await state.get_data())
     # print(message.from_user.id)
     await message.answer(
         text=f"Привет, {message.from_user.first_name}",
-        reply_markup=keyboards.create_menu(is_admin_check(message.from_user.id)),
+        reply_markup=keyboards.create_menu(await is_admin_check(message.from_user.id)),
     )
 
 
@@ -62,7 +62,7 @@ async def delete_group(message: types.Message):
         text=f"Для удаления группы, напишите код `{code}` в чате группы",
         parse_mode=types.ParseMode.MARKDOWN,
     )
-    file = open("data/delete_codes.txt", "a")
+    file = open("src/data/delete_codes.txt", "a")
     file.write(code + "\n")
 
 
@@ -73,7 +73,7 @@ async def add_group(message: types.Message):
         text=f"Сначала добавьте бота в группу, затем напишите код `{code}` в чате группы",
         parse_mode=types.ParseMode.MARKDOWN,
     )
-    file = open("data/codes.txt", "a")
+    file = open("src/data/codes.txt", "a")
     file.write(code + "\n")
 
 

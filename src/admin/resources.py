@@ -1,6 +1,6 @@
 from fastapi_admin.app import app
 from fastapi_admin.resources import Link, Model, ToolbarAction, Field
-from fastapi_admin.widgets import inputs
+from fastapi_admin.widgets import inputs, displays
 from fastapi_admin.file_upload import FileUpload
 import os
 
@@ -8,7 +8,7 @@ from starlette.requests import Request
 
 from fastapi_admin.enums import Method
 from fastapi_admin.i18n import _
-from .models import BotSettings, BotAdmin, BanWords
+from .models import BotSettings, BotAdmin, BanWords, ServiceMessages, Group
 from fastapi import Depends
 
 from fastapi_admin.depends import get_resources
@@ -78,4 +78,42 @@ class BotAdminResource(Model):
         "telegram_id",
         "username",
         "fullname",
+    ]
+
+
+@app.register
+class BanWordsResource(Model):
+    label = "Запрещенные слова"
+    model = BanWords
+    page_title = (
+        "Если одно из этих слов встретится в тексте обьявления, оно будет отброшено"
+    )
+    fields = [
+        "id",
+        Field(
+            name="password",
+            label="Password",
+            display=displays.InputOnly(),
+            input_=inputs.Password(),
+        ),
+    ]
+
+
+@app.register
+class ServiceMessagesResource(Model):
+    label = "Сервисные сообщения"
+    model = ServiceMessages
+    page_title = "Сервисные сообщения"
+    fields = [
+        "night_time",
+    ]
+
+
+@app.register
+class GroupResource(Model):
+    label = "Группы"
+    model = Group
+    page_title = "Группы"
+    fields = [
+        "group_id",
     ]

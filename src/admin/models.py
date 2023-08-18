@@ -23,6 +23,10 @@ class BotAdmin(Model):
     fullname = fields.CharField(max_length=200)
 
 
+class Group(Model):
+    group_id = fields.CharField(max_length=30)
+
+
 class BanWords(Model):
     words = fields.TextField()
 

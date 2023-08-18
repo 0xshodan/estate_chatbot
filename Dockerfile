@@ -13,7 +13,6 @@ ENV PYTHONUNBUFFERED=1 \
     VENV_PATH="/opt/pysetup/.venv"
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
-
 FROM python-base as builder
 LABEL stage="builder"
 
@@ -25,9 +24,15 @@ COPY poetry.lock pyproject.toml ./
 
 RUN poetry install --only main
 
-FROM python-base as production
-ENV FASTAPI_ENV=production
+FROM python-base as admin
+ENV FASTAPI_ENV=admin
 COPY --from=builder $PYSETUP_PATH $PYSETUP_PATH
 COPY . /app
 WORKDIR /app
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "src.admin.start:app"]
+CMD ["uvicorn", "src.admin.start:app", "--host", "0.0.0.0", "--port", "8000"]
+
+FROM python-base as bot
+COPY --from=builder $PYSETUP_PATH $PYSETUP_PATH
+COPY . /app
+WORKDIR /app
+CMD ["python3", "src/app.py"]

@@ -9,7 +9,7 @@ from utils import (
     is_admin_check,
 )
 from admin.models import BotAdmin
-from src.loader import bot
+from loader import bot
 
 
 class IsGroup(BoundFilter):
@@ -19,17 +19,21 @@ class IsGroup(BoundFilter):
 
 class GroupNotRegister(BoundFilter):
     async def check(self, message: types.Message, *args, **kwargs) -> bool:
-        return (not chat_registration(message.chat.id)) and check_code(message.text)
+        return (not await chat_registration(message.chat.id)) and check_code(
+            message.text
+        )
 
 
 class GroupReRegister(BoundFilter):
     async def check(self, message: types.Message, *args, **kwargs) -> bool:
-        return chat_registration(message.chat.id) and check_code(message.text)
+        return await chat_registration(message.chat.id) and check_code(message.text)
 
 
 class GroupDelete(BoundFilter):
     async def check(self, message: types.Message, *args, **kwargs) -> bool:
-        return chat_registration(message.chat.id) and check_delete_code(message.text)
+        return await chat_registration(message.chat.id) and check_delete_code(
+            message.text
+        )
 
 
 class SwearCheck(BoundFilter):

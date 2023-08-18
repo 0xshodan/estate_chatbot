@@ -2,7 +2,6 @@ version: "3.8"
 
 services:
   db:
-    container_name: postgresql_db
     image: postgres
     restart: always
     ports:
@@ -11,17 +10,28 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
-  app:
+  admin:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    volumes:
-      - .:/app
+      target: admin
     ports:
       - 8000:8000
     restart: always
     depends_on:
       - db
+      - redis
+    volumes:
+      - .:/app
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: bot
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - .:/app
   redis:
-    container_name: redis
     image: redis
