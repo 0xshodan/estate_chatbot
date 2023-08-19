@@ -18,4 +18,4 @@ class IsNightTime(BoundFilter):
         start_time, end_time = settings.split("-")
         start_h = int(start_time.split(":")[0])
         end_h = int(end_time.split(":")[0])
-        return not time(start_h) <= message.date.time() <= time(end_h)
+        return time(start_h) <= message.date.time() <= time(end_h)
