@@ -11,6 +11,7 @@ aiogram = "^2.25.1"
 fastapi-admin = { git = "https://github.com/fastapi-admin/fastapi-admin" }
 asyncpg = "^0.28.0"
 gunicorn = "^21.2.0"
+telebot = "^0.0.5"
 
 
 [build-system]

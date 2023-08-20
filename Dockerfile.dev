@@ -44,3 +44,11 @@ COPY --from=builder $POETRY_HOME $POETRY_HOME
 COPY --from=builder $PYSETUP_PATH $PYSETUP_PATH
 WORKDIR /app
 CMD ["python3", "src/app.py"]
+
+FROM python-base as bot-admin
+WORKDIR $PYSETUP_PATH
+
+COPY --from=builder $POETRY_HOME $POETRY_HOME
+COPY --from=builder $PYSETUP_PATH $PYSETUP_PATH
+WORKDIR /app
+CMD ["python3", "src/bot_admin/main.py"]
